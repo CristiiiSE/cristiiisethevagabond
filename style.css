@@ -26,6 +26,14 @@ section{
     background-repeat: no-repeat;
     background-size: cover;
     height: 600px;
+}
+    
+.video-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    
+}    
     
 
     
