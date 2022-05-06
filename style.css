@@ -22,10 +22,13 @@ section{
 }
 
 .hero{
-    background-image:url("https://user-images.githubusercontent.com/98966871/161418749-7485853a-e9e8-45f3-9aef-8c00ed3fc795.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #333;
+    color: white;
+    margin-bottom: 100px;
+    padding: 200px 0;
     position: relative;
 }
     
