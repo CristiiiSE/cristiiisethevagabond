@@ -1,0 +1,216 @@
+function et_escape(param)
+{
+	return encodeURIComponent(param);
+}
+
+function et_unescape(param)
+{
+	return decodeURIComponent(param);
+}
+        var arrOfLinksToPrepare = [
+    {
+        "name": "Twitter",
+        "type": "socialMediaLink",
+        "pattern": "^(https?:)?(\/\/)?[^\/]*twitter\\.com"
+    },
+    {
+        "name": "Xing",
+        "type": "socialMediaLink",
+        "pattern": "^(https?:)?(\/\/)?[^\/]*xing\\.com"
+    },
+    {
+        "name": "LinkedIn",
+        "type": "socialMediaLink",
+        "pattern": "^(https?:)?(\/\/)?[^\/]*linkedin\\.com"
+    },
+    {
+        "name": "YouTube",
+        "type": "socialMediaLink",
+        "pattern": "^(https?:)?(\/\/)?[^\/]*youtube\\.com"
+    },
+    {
+        "name": "Facebook",
+        "type": "socialMediaLink",
+        "pattern": "^(https?:)?(\/\/)?[^\/]*facebook\\.com"
+    },
+    {
+        "name": "Instagram",
+        "type": "socialMediaLink",
+        "pattern": "^(https?:)?(\/\/)?[^\/]*instagram\\.com"
+    },
+    {
+        "name": "Pinterest",
+        "type": "socialMediaLink",
+        "pattern": "^(https?:)?(\/\/)?[^\/]*pinterest\\.com"
+    },
+    {
+        "name": "Tumblr",
+        "type": "socialMediaLink",
+        "pattern": "^(https?:)?(\/\/)?[^\/]*tumblr\\.com"
+    },
+    {
+        "name": "External Link",
+        "type": "externalLink",
+        "pattern": "(?!mailto:)(?!tel:)(?!javascript:)(?!^(https?:\\\/\\\/)?(.*\\.)?(ral-farben\\.de|ral-farben\\.onpublix\\.net|paypal\\.com|ral-farben\\.onwebhosting\\.net|twitter\\.com|xing\\.com|linkedin\\.com|youtube\\.com|facebook\\.com|instagram\\.com|pinterest\\.com|tumblr\\.com))(^.*$)"
+    },
+    {
+        "name": "Mailto Link",
+        "type": "mailToLink",
+        "pattern": "^mailto:.*"
+    },
+    {
+        "name": "Phone",
+        "type": "telLink",
+        "pattern": "^tel:.*"
+    },
+    {
+        "name": "document",
+        "type": "download",
+        "pattern": "^(https?:\\\/\\\/)?(www\\.)?(.*\\.)?(ral-farben\\.de|ral-farben\\.onpublix\\.net|paypal\\.com|ral-farben\\.onwebhosting\\.net).+\\.doc$|\\.docx$|\\.docm$|\\.dotm$|\\.dotx$|\\.dot$|\\.odt$|\\.pages$"
+    },
+    {
+        "name": "excel",
+        "type": "download",
+        "pattern": "^(https?:\\\/\\\/)?(www\\.)?(.*\\.)?(ral-farben\\.de|ral-farben\\.onpublix\\.net|paypal\\.com|ral-farben\\.onwebhosting\\.net).+\\.xls$|\\.xlsx$|\\.xlsm$|\\.xltm$|\\.xltx$|\\.xml$|\\.xlsb$|\\.ods$|\\.numbers$"
+    },
+    {
+        "name": "powerpoint",
+        "type": "download",
+        "pattern": "^(https?:\\\/\\\/)?(www\\.)?(.*\\.)?(ral-farben\\.de|ral-farben\\.onpublix\\.net|paypal\\.com|ral-farben\\.onwebhosting\\.net).+\\.ppt$|\\.pptx$|\\.pptm$|\\.pot$|\\.potx$|\\.potm$|\\.odp$|\\.key$"
+    },
+    {
+        "name": "pdf",
+        "type": "download",
+        "pattern": "^(https?:\\\/\\\/)?(www\\.)?(.*\\.)?(ral-farben\\.de|ral-farben\\.onpublix\\.net|paypal\\.com|ral-farben\\.onwebhosting\\.net).+\\.pdf$|\\.pdfx$"
+    },
+    {
+        "name": "image",
+        "type": "download",
+        "pattern": "^(https?:\\\/\\\/)?(www\\.)?(.*\\.)?(ral-farben\\.de|ral-farben\\.onpublix\\.net|paypal\\.com|ral-farben\\.onwebhosting\\.net).+\\.gif$|\\.jpg$|\\.jpeg$|\\.jpe$|\\.png$|\\.svg$|\\.tif$|\\.tiff$"
+    },
+    {
+        "name": "mp3",
+        "type": "download",
+        "pattern": "^(https?:\\\/\\\/)?(www\\.)?(.*\\.)?(ral-farben\\.de|ral-farben\\.onpublix\\.net|paypal\\.com|ral-farben\\.onwebhosting\\.net).+\\.mp3$"
+    },
+    {
+        "name": "mp4",
+        "type": "download",
+        "pattern": "^(https?:\\\/\\\/)?(www\\.)?(.*\\.)?(ral-farben\\.de|ral-farben\\.onpublix\\.net|paypal\\.com|ral-farben\\.onwebhosting\\.net).+\\.mp4$"
+    },
+    {
+        "name": "csv",
+        "type": "download",
+        "pattern": "^(https?:\\\/\\\/)?(www\\.)?(.*\\.)?(ral-farben\\.de|ral-farben\\.onpublix\\.net|paypal\\.com|ral-farben\\.onwebhosting\\.net).+\\.csv$"
+    },
+    {
+        "name": "zip",
+        "type": "download",
+        "pattern": "^(https?:\\\/\\\/)?(www\\.)?(.*\\.)?(ral-farben\\.de|ral-farben\\.onpublix\\.net|paypal\\.com|ral-farben\\.onwebhosting\\.net).+\\.zip$"
+    },
+    {
+        "name": "stp",
+        "type": "download",
+        "pattern": "^(https?:\\\/\\\/)?(www\\.)?(.*\\.)?(ral-farben\\.de|ral-farben\\.onpublix\\.net|paypal\\.com|ral-farben\\.onwebhosting\\.net).+\\.stp$"
+    }
+];
+        var preparePlayableMedia = false;
+        var getParamsWhitelist = [];
+            if (typeof(sessionStorage) !== 'undefined')
+            {
+                sessionStorage.setItem('et_cssSelectors', JSON.stringify([{"id":1,"url":"ral-farben.de\/*","cssSelector":"#mainForm > aside > div.phone","category":"Kontakt","object":"Sticky-Element Website","action":"Anruf","type":"cssSelectorId:1","eventType":"EVENT_TYPE_CLICK","isOnsiteCampaign":false,"onsiteCmp":"","onsiteMed":"","segmentSource":"","segmentValue":""},{"id":4,"url":"ral-farben.de\/*","cssSelector":"#mainForm > aside > div.contact","category":"Kontakt","object":"Sticky-Element Website","action":"Kontaktseite aufrufen","type":"cssSelectorId:4","eventType":"EVENT_TYPE_CLICK","isOnsiteCampaign":false,"onsiteCmp":"","onsiteMed":"","segmentSource":"","segmentValue":""},{"id":7,"url":"ral-farben.de\/*","cssSelector":"#mainForm > aside > div.dates","category":"Navigation","object":"Sticky-Element Website","action":"Eventkalender aufrufen","type":"cssSelectorId:7","eventType":"EVENT_TYPE_CLICK","isOnsiteCampaign":false,"onsiteCmp":"","onsiteMed":"","segmentSource":"","segmentValue":""},{"id":10,"url":"ral-farben.de\/*","cssSelector":"#mainForm > aside > div.newsletter-sidebar","category":"Navigation","object":"Sticky-Element Website","action":"Newsletter-Formular aufrufen","type":"cssSelectorId:10","eventType":"EVENT_TYPE_CLICK","isOnsiteCampaign":false,"onsiteCmp":"","onsiteMed":"","segmentSource":"","segmentValue":""},{"id":13,"url":"shop.ral-farben.de\/de\/checkout\/*","cssSelector":"#shipping-new-address-form > fieldset:nth-child(1) > div > div:nth-child(1)","category":"Checkout-Prozess","object":"Verbraucher","action":"Kontotyp w\u00e4hlen","type":"cssSelectorId:13","eventType":"EVENT_TYPE_CLICK","isOnsiteCampaign":false,"onsiteCmp":"","onsiteMed":"","segmentSource":"","segmentValue":""},{"id":16,"url":"shop.ral-farben.de\/de\/checkout\/*","cssSelector":"#shipping-new-address-form > fieldset:nth-child(1) > div > div:nth-child(2)","category":"Checkout-Prozess","object":"Unternehmen","action":"Kontotyp w\u00e4hlen","type":"cssSelectorId:16","eventType":"EVENT_TYPE_CLICK","isOnsiteCampaign":false,"onsiteCmp":"","onsiteMed":"","segmentSource":"","segmentValue":""},{"id":19,"url":"shop.ral-farben.de\/en\/checkout\/*","cssSelector":"#shipping-new-address-form > fieldset:nth-child(1) > div > div:nth-child(1)","category":"Checkout-Prozess","object":"Verbraucher","action":"Kontotyp w\u00e4hlen","type":"cssSelectorId:19","eventType":"EVENT_TYPE_CLICK","isOnsiteCampaign":false,"onsiteCmp":"","onsiteMed":"","segmentSource":"","segmentValue":""},{"id":22,"url":"shop.ral-farben.de\/en\/checkout\/*","cssSelector":"#shipping-new-address-form > fieldset:nth-child(1) > div > div:nth-child(2)","category":"Checkout-Prozess","object":"Unternehmen","action":"Kontotyp w\u00e4hlen","type":"cssSelectorId:22","eventType":"EVENT_TYPE_CLICK","isOnsiteCampaign":false,"onsiteCmp":"","onsiteMed":"","segmentSource":"","segmentValue":""}]));
+                sessionStorage.setItem('et_cssSelectorsLoaded', 'true');
+            }
+
+var et_protocol = window._etracker.getConfigValue('protocol') || '//';
+
+if(typeof(et_proxy_redirect) == 'undefined' || typeof(et_proxy_redirect) == 'unknown' || et_proxy_redirect == '')
+{
+	var et_server = et_protocol + 'www.etracker.de';
+	var et_code_server = et_protocol + 'code.etracker.com';
+}
+else
+{
+	var et_server = et_proxy_redirect;
+	var et_code_server = et_proxy_redirect;
+}
+
+var et_ver = '5.0';
+var et_panelLink = et_server + '/app?et=';
+var et_secureId = 'i9sZGE';
+
+var et_maxUrlLength = (function () {
+	var isIE = /*@cc_on!@*/false || !!document.documentMode;
+	return isIE ? 2000 : 8190;
+})();
+
+var et_deliveryHash = "dcC9pQcoHce2Sz2Tu0SNrefrv1N0WZ3M";
+
+var cc_autoPageNameRegistration = 'url';
+var cc_getParamsWhiteList = [];
+
+var et_initCoidTransfer = function() {
+    var links = [];
+    if(links.length > 0) {
+        var anchors = document.getElementsByTagName('a');
+        var coid = et_getCookieValue('et_allow_cookies', true) === '1' ? _etracker.getCoid() : '';
+        et_prepareAnchorsForCoidTransfer(anchors, links, coid);
+    }
+};
+et_initCoidTransfer();ET_Event = new etEvent("i9sZGE", et_server);
+var cc_cntScript    = 'cntcc';
+var cc_genericEventPath = '/api/v6/tracking/webEvents';
+var cc_optInPath 	= '/api/v6/tracking/optIn';
+var cc_cntCookie    = '/cntcookie.php';
+var cc_deltaTime 	= 16978148441862-(new Date().getTime()*10);
+var cc_codecVersion	= 1;
+var cc_apiVersion	= '1.1.2';
+var cc_articleDivider = '|';
+var cc_itemDivider	= ';';
+
+var et_autoSiteSearchActive = false;
+var et_autoSiteSearchParameters = [];
+
+(function () {'use strict';window.et_ScrollDepthUtils={getPageName:function(){return et_getPageName();},isInIframe:function(){try{return window.self!==window.top;}catch(e){return true;}}};
+'use strict';function ScrollPositionsContainer(timestamp){var _this=this;_this.buckets=_createNewBuckets();_this.tm=timestamp;_this.bucketChangeEvent=undefined;_this.lastBuckets=[];ScrollPositionsContainer.prototype.getPositions=function(){return _this.buckets;};ScrollPositionsContainer.prototype.reset=function(){_this.buckets=_createNewBuckets();};ScrollPositionsContainer.prototype.addStayTime=function(positionFrom,positionTo,timeMs){if(positionFrom < 0||positionTo < 0){return;}_this.tm=new Date().getTime();positionFrom=Math.floor(positionFrom);positionTo=Math.floor(positionTo);if(positionFrom > positionTo){var originalTo=positionTo;positionTo=positionFrom;positionFrom=originalTo;}var currentBuckets=[];for(var key in _this.buckets){if(positionFrom <=_this.buckets[key].to&&positionTo >=_this.buckets[key].from){_this.buckets[key].stayTime+=timeMs;currentBuckets.push(key);}}if(_bucketsChanged(currentBuckets,_this.lastBuckets)&&typeof _this.bucketChangeEvent==='function'){_this.bucketChangeEvent();}_this.lastBuckets=currentBuckets;};function _bucketsChanged(arr1,arr2){if(arr1.length===0||arr2.length===0){return false;}if(arr1.length!==arr2.length){return true;}for(var i=0;i < arr1.length;i++){if(arr1[i]!==arr2[i]){return true;}}return false;}ScrollPositionsContainer.prototype.subscribeToBucketChange=function(callback){_this.bucketChangeEvent=callback;};function _createNewBuckets(){var buckets={0:{stayTime:0},10:{stayTime:0},25:{stayTime:0},50:{stayTime:0},75:{stayTime:0},101:{stayTime:0}};var previousKey=0;for(var key in buckets){key=parseInt(key);buckets[previousKey].to=key-1;buckets[key].from=key;buckets[key].to=1000000;previousKey=key;}return buckets;}}
+'use strict';var et_ScrollDepthEvent=function(eventObject,pageName){if(!(this instanceof et_ScrollDepthEvent)){return new et_ScrollDepthEvent(eventObject,pageName);}this.name='scrollDepth';this.pagename=pageName;this.version=1;this.eventData={'object':eventObject};};et_ScrollDepthEvent.prototype=new et_GenericEvent();et_ScrollDepthEvent.prototype.constructor=et_ScrollDepthEvent;et_ScrollDepthEvent.prototype.getEvent=function(){var originalObject=et_GenericEvent.prototype.getEvent.call(this)[0];originalObject[this.name]['pagename']=this.pagename;return[originalObject];};function ScrollDepthTracker(currentTm){var _this=this;_this.REFRESH_TIME_MS=1000;    _this.STORAGE_PREFIX=et_config.cookie_path ? et_config.cookie_path+'/':'';_this.STORAGE_KEY=_this.STORAGE_PREFIX+'et_scroll_depth';_this.STORAGE_MAX_AGE_MS=1*60*60*1000;_this.THROTTLING_TIME=5000;_this.STORAGE=sessionStorage;_this.lastUpdateTm=currentTm;_this.lastFlushedTm=undefined;_this.siteHeight=1;_this.scrollPositions=new ScrollPositionsContainer(currentTm);_this.startTracking=startTracking;_this.getScrollPositions=getScrollPositions;_this.getPageName=getPageName;_this.save=save;_this.load=load;_this.reset=reset;function startTracking(){_this.scrollPositions.subscribeToBucketChange(_onScrollingBucketChange);var body=document.body;var html=document.documentElement||document.body;_this.siteHeight=Math.max(body.scrollHeight,body.offsetHeight,html.clientHeight,html.scrollHeight,html.offsetHeight);_this.load();et_addEvent(window,'scroll',_updateScrollPositions);setInterval(_updateScrollPositions,_this.REFRESH_TIME_MS);setInterval(save,_this.REFRESH_TIME_MS);}function _onScrollingBucketChange(){var nowTm=new Date().getTime();if(!_this.lastFlushedTm||nowTm-_this.lastFlushedTm >=_this.THROTTLING_TIME){_sendScrollDepthEventEvent();_this.lastFlushedTm=nowTm;}}function _sendScrollDepthEventEvent(pageName,buckets){if(!_etracker.isTrackingEnabled()){return;}pageName=pageName||getPageName();if(!buckets){buckets=_createBucketsArrayToSend(_this.scrollPositions.buckets);}_etracker.sendEvent(et_ScrollDepthEvent(encodeURIComponent(JSON.stringify(buckets)),pageName));_this.reset();}function _createBucketsArrayToSend(bucketsObj){var buckets=[];for(var bucketKey in bucketsObj){buckets.push({from:bucketsObj[bucketKey].from,to:bucketsObj[bucketKey].to,stayTime:bucketsObj[bucketKey].stayTime});}return buckets;}function reset(){_this.scrollPositions.reset();_this.save();}function _updateScrollPositions(){var currentPositions=_this.getScrollPositions();var newTm=new Date().getTime();var stayTime=newTm-_this.lastUpdateTm;_this.scrollPositions.addStayTime(currentPositions.from,currentPositions.to,stayTime);_this.lastUpdateTm=newTm;}function getPageName(){return window.et_ScrollDepthUtils.getPageName();}function save(){var pageName=_this.getPageName();if(pageName===undefined||!_this.scrollPositions||!_this.STORAGE){return;}_this.scrollPositions.tm=new Date().getTime();var storedJson=_readJsonFromStorage();storedJson[pageName]=_this.scrollPositions;_this.STORAGE.setItem(_this.STORAGE_KEY,JSON.stringify(storedJson));}function _deleteExpiredEntries(){var storedJson=_readJsonFromStorage();var now=new Date().getTime();for(var key in storedJson){if(now-storedJson[key].tm > _this.STORAGE_MAX_AGE_MS){delete storedJson[key];}}_this.STORAGE.setItem(_this.STORAGE_KEY,JSON.stringify(storedJson));}function load(){if(!_this.STORAGE){return;}_deleteExpiredEntries();var storedContent=_readJsonFromStorage();var pageName=_this.getPageName();if(storedContent[pageName]&&storedContent[pageName].buckets){var storedContentForPage=storedContent[pageName];if(storedContentForPage.buckets){for(var key in storedContentForPage.buckets){if(_this.scrollPositions.buckets[key]!==undefined){_this.scrollPositions.buckets[key].stayTime=storedContentForPage.buckets[key].stayTime;}}}}}function _readJsonFromStorage(){if(!_this.STORAGE){return{};}var storedContent=_this.STORAGE.getItem(_this.STORAGE_KEY);if(!storedContent){return{};}try{return JSON.parse(storedContent);}catch(e){return{};}}function getScrollPositions(){var scrollX=0,scrollY=0;if(typeof(window.pageYOffset)==='number'){scrollY=window.pageYOffset;scrollX=window.pageXOffset;}else if(document.body&&(document.body.scrollLeft||document.body.scrollTop)){scrollY=document.body.scrollTop;scrollX=document.body.scrollLeft;}else if(document.documentElement&&(document.documentElement.scrollLeft||document.documentElement.scrollTop)){scrollY=document.documentElement.scrollTop;scrollX=document.documentElement.scrollLeft;}return{from:scrollY/_this.siteHeight*100,to:(scrollY+_getViewportSize()['height'])/_this.siteHeight*100};}/***Gets the viewport size depending of browser capabilities *@returns{{width:*,height:*}}*/function _getViewportSize(){var viewPortWidth;var viewPortHeight;if(typeof window.innerWidth!=='undefined'){viewPortWidth=window.innerWidth;viewPortHeight=window.innerHeight;}else if(typeof document.documentElement!=='undefined'&&typeof document.documentElement.clientWidth!=='undefined'&&document.documentElement.clientWidth!==0){viewPortWidth=document.documentElement.clientWidth;viewPortHeight=document.documentElement.clientHeight;}else{viewPortWidth=document.getElementsByTagName('body')[0].clientWidth;viewPortHeight=document.getElementsByTagName('body')[0].clientHeight;}return{width:viewPortWidth,height:viewPortHeight};}}
+'use strict';var SAMPLING_RATE=0.2;var scrollMapSettings=2;var shouldScrollDepthBeActive=false;function startScrollDepth(){if(_etracker.isTrackingEnabled()&&(scrollMapSettings===2||(_etracker.areCookiesEnabled()&&scrollMapSettings===1))){if(_isCookieSet()){shouldScrollDepthBeActive=_isCookieTrue();}else{shouldScrollDepthBeActive=Math.random()<=SAMPLING_RATE;_setCookie(shouldScrollDepthBeActive);}}if(shouldScrollDepthBeActive&&!window.et_ScrollDepthUtils.isInIframe()){var scrollDepth=new ScrollDepthTracker(new Date().getTime());_etracker.addOnLoad(scrollDepth.startTracking);}}function _isCookieSet(){try{return !!document.cookie.match(/isSdEnabled=/);}catch(e){}return false;}function _isCookieTrue(){try{return !!document.cookie.match(/isSdEnabled=true/);}catch(e){}return false;}function _setCookie(isTrue){et_setCookieValue('isSdEnabled',isTrue,1,undefined,false);}_etracker.addEvent(startScrollDepth);
+'use strict';(function(){if(window.et_ScrollDepthUtils.isInIframe()){var currentHeight=0;et_addEvent(window,'beforeunload',function(){_sendMessage('page-unloaded');});_etracker.addOnLoad(function(){currentHeight=_getPageHeight();var message={height:currentHeight};_sendMessage('page-loaded',message);});et_addEvent(window,'resize',function(){var newPageHeight=_getPageHeight();if(newPageHeight!==currentHeight){currentHeight=newPageHeight;var message={height:currentHeight};_sendMessage('height-changed',message);}});}function _sendMessage(type,payload){var message={type:type,payload:payload,url:window.location.href,pageName:window.et_ScrollDepthUtils.getPageName()};parent.postMessage(JSON.stringify(message),'*');}function _getPageHeight(){var body=document.body;var html=document.documentElement;return Math.max(body.scrollHeight,body.offsetHeight,html.clientHeight,html.scrollHeight,html.offsetHeight);}})();
+})();function _etc_start()
+{
+	var c = "";
+
+	if (typeof _etracker.setFirstPixelSent == 'function')
+		_etracker.setFirstPixelSent();
+	if (typeof _etracker.doWrapperCalls == 'function')
+		_etracker.doWrapperCalls();
+
+	var et_isSubscriber = (
+		'Notification' in window &&
+		typeof(window.Notification) == "function" &&
+		window.Notification.permission == "granted"
+	);
+
+	var extra = {
+		et_sbscr: et_isSubscriber ? '1' : '0'
+	};
+
+	et_cc('i9sZGE', extra);
+
+	etCommerce.etCommerceLoad('i9sZGE');
+	etCommerce.doPreparedEvents();        et_setupPageExitBeacon('i9sZGE');
+        prepareAnchors = new et_prepareAnchorsForEvents(arrOfLinksToPrepare, getParamsWhitelist);prepareMedia = preparePlayableMedia && typeof et_prepareMediaForEvents !== "undefined" ? new et_prepareMediaForEvents() : null;if(c != '') {var x = document.createElement('div');x.innerHTML = c;var et_bodyInterval = window.setInterval(function(){if(document.body) {window.clearInterval(et_bodyInterval);document.body.appendChild(x);}}, 1);}	}
+
+	var et_OptInType = 0;
+	var et_CookieOptInType = 0;
+	var et_CookieActionButtonType = 0;
+	var _etc = function() {
+		if(typeof et_checkConsentIcon === "function") {
+			et_checkConsentIcon();
+		}
+		if(et_checkOptInCookie()) {
+			et_checkCookieOptInCookie();
+			_etc_start();
+		}
+	};
+_etracker.setReady();

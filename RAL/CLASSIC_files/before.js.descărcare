@@ -1,0 +1,54 @@
+﻿function updateElements(e) {
+
+    // loop through all elements
+    for (var i = 0; i < e.length; i++) {
+        var an = e[i].addedNodes;
+
+        for (var j = 0; j < an.length; j++) {
+            // an[j].nodeName z.B. IMG, DIV
+            if (an[j].nodeName.toLowerCase() == "div" && an[j].classList.contains("icon_box")) {
+                // change texts
+                if (window.location.href.indexOf("/en/")>-1) {
+                    an[j].innerHTML = an[j].innerHTML.replace("Bilderstrecke", "Gallery")
+                    an[j].innerHTML = an[j].innerHTML.replace("Bildstrecke", "Gallery")
+                }
+            }
+
+            // w paramter for mobile keyvis            
+            if (an[j].nodeName.toLowerCase() == "img" && an[j].classList.contains("keyvisImage") && window.innerWidth < 1024) {
+                an[j].src = an[j].src + "?w=1024";
+            }
+            
+            
+            if (an[j].nodeName.toLowerCase() == "img" && an[j].classList.contains("newsImage") && window.innerWidth < 768) {
+                
+                an[j].src = an[j].src + "?w="+window.innerWidth;
+            }
+        }
+
+    }
+}
+
+function registerEvents(obj, callback) {
+    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+    if (MutationObserver) {
+        var obs = new MutationObserver(function(mutations, observer) {
+            callback(mutations)
+        });
+        obs.observe(obj, {
+            childList: true,
+            subtree: true
+        })
+    } else {
+        if (window.addEventListener) {
+            obj.addEventListener("DOMNodeInserted", callback, false);
+            obj.addEventListener("DOMAttrModified", callback, false);
+            obj.addEventListener("DOMAttributeNameChanged", callback, false);
+            obj.addEventListener("DOMElementNameChanged", callback, false);
+            obj.addEventListener("DOMSubtreeModified", callback, false)
+        }
+    }
+}
+
+// register events
+registerEvents(document, updateElements);
